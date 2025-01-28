@@ -43,7 +43,7 @@ pipeline {
         }
        stage('push artifact') {
             steps {
-              jf 'rt u /var/lib/jenkins/workspace/pipeline-part2/target/spring-petclinic-3.4.0-SNAPSHOT.jar  petclinic_artifact-libs-snapshot-local/springpetclinic/spring-petclinic-3.4.0-SNAPSHOT.jar'
+              jf 'rt u /var/lib/jenkins/workspace/pipeline_part3/target/spring-petclinic-3.4.0-SNAPSHOT.jar  petclinic_artifact-libs-snapshot-local/springpetclinic/spring-petclinic-3.4.0-SNAPSHOT.jar'
             }
         }
 
