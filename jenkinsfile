@@ -12,7 +12,7 @@ pipeline {
                     monitorProjectOnBuild: false,
                     failOnIssues: false,  // Use boolean for failOnIssues
                     additionalArguments: '--json-file-output=all-vulnerabilities.json'
-                    sudo chmod +x mvnw
+                    chmod +x mvnw
                 )
             }
         }
