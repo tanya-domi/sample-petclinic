@@ -14,9 +14,7 @@ pipeline {
                     additionalArguments: '--json-file-output=all-vulnerabilities.json'
                 )
             }
-        }
-        tools {
-           maven "Maven-3.9.8"
+    
     }
         stage ('Build jar') {
             steps {
