@@ -14,7 +14,6 @@ pipeline {
                     additionalArguments: '--json-file-output=all-vulnerabilities.json'
                 )
             }
-    
     }
         stage ('Build jar') {
             steps {
