@@ -3,7 +3,7 @@ pipeline {
       tools {
         jfrog 'jfrog-cli'
       }
-       stages {
+    stages {
         stage('snyk scan') {
             steps {
                 snykSecurity(
@@ -16,7 +16,6 @@ pipeline {
                 )
             }
         }
-    
         stage('maven build artifact') {
             steps {
               // jf 'mvn-config --petclinic_artifact-libs-release --petclinic_artifact-libs-snapshot --petclinic_artifact-libs-release-local --petclinic_artifact-libs-snapshot-local'
