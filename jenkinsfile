@@ -22,7 +22,12 @@ pipeline {
 		  environment {
              scannerHome = tool 'sonar-scanner-6'
           }
-      //     steps {
+        // stage('code analysis with sonarqube') {
+          
+		//   environment {
+        //      scannerHome = tool 'sonar-scanner-6'
+        //   }
+        //     steps {
         //     withSonarQubeEnv('sonar-server') {
         //        sh '''${scannerHome}/bin/sonar-scanner \
         //            -Dsonar.projectKey=petclinic01 \
@@ -34,6 +39,25 @@ pipeline {
         //     }
         //   }
         }
+
+            stage('SonarQube Analysis') {
+          environment {
+                scannerHome = tool 'sonar-scanner-6'
+            }
+
+            steps {
+        
+              withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                      sh """
+                       /home/ubuntu/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube-Scanner-6.2.1/bin/sonar-scanner \
+                      -Dsonar.projectKey=petclinic01  \
+                      -Dsonar.projectName='petclinic01 ' \
+                      -Dsonar.sources=src/main/java/ \
+                      -Dsonar.java.binaries=target/classes \
+                     """
+                } 
+            }
+    }
 
        stage('building docker image') {
             steps {
