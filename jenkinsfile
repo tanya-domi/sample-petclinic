@@ -47,7 +47,7 @@ pipeline {
 
             steps {
         
-              withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+              withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                       sh """
                        /home/ubuntu/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube-Scanner-6.2.1/bin/sonar-scanner \
                       -Dsonar.projectKey=petclinic01  \
