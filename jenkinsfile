@@ -33,7 +33,7 @@ pipeline {
         //            -Dsonar.organization=dom-org'''
         //     }
         //   }
-        // }
+        }
 
        stage('building docker image') {
             steps {
