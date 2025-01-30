@@ -1,20 +1,14 @@
 pipeline {
     agent any
-      tools {
-        jfrog 'jfrog-cli'
-      }
-    stages {
-        stage('snyk scan') {
-            steps {
-                snykSecurity(
-                    snykInstallation: 'snyk@latest',
-                    snykTokenId: 'snyk_api_token',
-                    monitorProjectOnBuild: false,
-                    failOnIssues: false,  // Use boolean for failOnIssues
-                    additionalArguments: '--json-file-output=all-vulnerabilities.json'
-                )
-            }
+    tools{
+        maven 'maven3'
     }
+    // environment {
+    //             // AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+    //             // AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
+    //             SONAR_TOKEN = credentials('sonarcloud-credentials')
+    //         }
+    stages {
         stage ('Build jar') {
             steps {
                 script {
@@ -23,11 +17,28 @@ pipeline {
                 }
             }  
         }
+        stage('code analysis with sonarqube') {
+          
+		  environment {
+             scannerHome = tool 'sonar-scanner-6'
+          }
+            steps {
+            withSonarQubeEnv('sonar-server') {
+               sh '''${scannerHome}/bin/sonar-scanner \
+                   -Dsonar.projectKey=petclinic01 \
+                   -Dsonar.projectName=petclinic01 \ 
+                   -Dsonar.projectVersion=1.0 \
+                   -Dsonar.sources=src/main/java \
+                   -Dsonar.java.binaries=target/classes \
+                   -Dsonar.organization=dom-org'''
+            }
+          }
+        }
 
-        stage('building docker image') {
+       stage('building docker image') {
             steps {
                 sh "docker build -t dts81/petclinic:${BUILD_NUMBER} ."
-            }
+        }
         }
         stage('docker image push') {
             steps {
@@ -36,14 +47,17 @@ pipeline {
                 }
             }
         }
+     
         stage('Publish build info') {
             steps {
+                withCredentials([usernameColonPassword(credentialsId: 'push-artifact', variable: 'UsernamePassword')]) {
                 jf 'rt build-publish'
+               }
             }
         }
-        stage('push artifact') {
+       stage('push artifact') {
             steps {
-              jf 'rt u /var/lib/jenkins/workspace/pipeline_part3/target/spring-petclinic-3.4.0-SNAPSHOT.jar  petclinic_artifact-libs-snapshot-local/springpetclinic/spring-petclinic-3.4.0-SNAPSHOT.jar'
+              jf 'rt u /var/lib/jenkins/workspace/petclinic-part02/target/spring-petclinic-3.4.0-SNAPSHOT.jar  petclinic_artifact-libs-snapshot-local/springpetclinic/spring-petclinic-3.4.0-SNAPSHOT.jar'
             }
         }
 
