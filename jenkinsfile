@@ -25,8 +25,8 @@ pipeline {
             steps {
             withSonarQubeEnv('sonar-server') {
                sh '''${scannerHome}/bin/sonar-scanner \
-                   -Dsonar.projectKey=petclinic01 \
-                   -Dsonar.projectName=dom-org-petclinic01 \ 
+                   -Dsonar.projectKey=dom-org \
+                   -Dsonar.projectName=petclinic01 \ 
                    -Dsonar.projectVersion=1.0 \
                    -Dsonar.sources=src/main/java \
                    -Dsonar.java.binaries=target/classes \
