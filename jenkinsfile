@@ -35,9 +35,8 @@ pipeline {
                       -Dsonar.java.binaries=target/classes \
                      """
                 } 
-            }
+           }
     }
-
        stage('building docker image') {
             steps {
                 sh "docker build -t dts81/petclinic:${BUILD_NUMBER} ."
