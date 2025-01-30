@@ -8,6 +8,7 @@ pipeline {
     //             // AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
     //             SONAR_TOKEN = credentials('sonarcloud-credentials')
     //         }
+
     stages {
         stage ('Build jar') {
             steps {
