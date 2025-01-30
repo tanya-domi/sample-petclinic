@@ -22,18 +22,18 @@ pipeline {
 		  environment {
              scannerHome = tool 'sonar-scanner-6'
           }
-            steps {
-            withSonarQubeEnv('sonar-server') {
-               sh '''${scannerHome}/bin/sonar-scanner \
-                   -Dsonar.projectKey=petclinic01 \
-                   -Dsonar.projectName=petclinic01 \ 
-                   -Dsonar.projectVersion=1.0 \
-                   -Dsonar.sources=src/main/java \
-                   -Dsonar.java.binaries=target/classes \
-                   -Dsonar.organization=dom-org'''
-            }
-          }
-        }
+      //     steps {
+        //     withSonarQubeEnv('sonar-server') {
+        //        sh '''${scannerHome}/bin/sonar-scanner \
+        //            -Dsonar.projectKey=petclinic01 \
+        //            -Dsonar.projectName=petclinic01 \ 
+        //            -Dsonar.projectVersion=1.0 \
+        //            -Dsonar.sources=src/main/java \
+        //            -Dsonar.java.binaries=target/classes \
+        //            -Dsonar.organization=dom-org'''
+        //     }
+        //   }
+        // }
 
        stage('building docker image') {
             steps {
